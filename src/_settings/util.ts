@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { ThunkDispatch } from 'redux-thunk';
 import moment from 'moment';
-import { ChartData, InvestmentHistory } from './types/models';
+import {
+  InvestmentHistory,
+  ApiResponseData,
+  ApiResponseDataRecord,
+  InvestmentHistoryRecord,
+  InvestmentCurrenciesHistory,
+} from './types/models';
 
 /* Utils */
 
@@ -78,24 +84,28 @@ export const handleResponseErrors = <T extends { Response: string; Message: stri
 export const handleResponseDataDecorator = (
   investment: string,
   investmentValue: number
-) => (data: any) => ({
-  ...data,
+) => (data: ApiResponseData) => ({
+  Data: data.Data.Data,
   _investment: investment,
   _investmentValue: investmentValue,
 });
 
-export const handleResponseIntoChartData = <
-  T extends { _investment: string; _investmentValue: number; Data: any }
+export const handleResponseIntoInvestmentHistory = <
+  T extends {
+    _investment: string;
+    _investmentValue: number;
+    Data: ApiResponseDataRecord[];
+  }
 >(
   data: T
-): ChartData => {
+): InvestmentCurrenciesHistory => {
   const { _investment, _investmentValue } = data;
-  const responseValues: any[] = data.Data.Data.slice(1, data.Data.Data.length);
+  const responseValues = data.Data.slice(1, data.Data.length);
   let prevValue: number | undefined;
   return {
-    [_investment]: mapArrayToObject(
+    [_investment]: mapArrayToObject<ApiResponseDataRecord, InvestmentHistoryRecord>(
       responseValues,
-      (_, obj: any) => obj.date.format().split('T')[0],
+      (_, obj) => obj.date.format().split('T')[0],
       (obj, index) => {
         const nextObj = responseValues[index + 1];
         const nextOpen = nextObj ? nextObj.open : obj.close;

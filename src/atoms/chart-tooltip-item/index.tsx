@@ -1,15 +1,15 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import { InvestmentCurrency, ChartData } from '../../_settings/types/models';
+import {
+  InvestmentCurrency,
+  ChartData,
+  ChartTooltipPayload,
+} from '../../_settings/types/models';
 import { CURRENCIES_LIST } from '../../_settings/consts';
 import { moneyLabelFormatter, numberToMoneyString } from '../../_settings/util';
 
 export interface ChartTooltipItemProps {
-  investment: {
-    dataKey: string;
-    color: string;
-    payload: ChartData['x'];
-  };
+  investment: ChartTooltipPayload;
   data: ChartData;
 }
 
@@ -18,10 +18,10 @@ const ChartTooltipItem: React.FC<ChartTooltipItemProps> = ({ investment, data })
     .filter(key => data[key][investment.dataKey])
     .sort()[0];
   const initialValue = data[initialDate][investment.dataKey];
-  const getInvestmentName = (investment: any) =>
+  const getInvestmentName = (investment: ChartTooltipPayload) =>
     investment.dataKey in CURRENCIES_LIST
       ? CURRENCIES_LIST[investment.dataKey as InvestmentCurrency].name
-      : investment.name.toUppercase();
+      : investment.name.toUpperCase();
   const profitPct = (investment.payload[investment.dataKey] / initialValue - 1) * 100;
 
   return (

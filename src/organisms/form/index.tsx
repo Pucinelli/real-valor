@@ -48,7 +48,7 @@ const Form: React.FC<FormProps> = ({ afterSubmit = () => {} }) => {
     const newValue = event.target.value.replace(/[.,]/g, '');
     if (newValue.length === 0) {
       setInvestedValue(0);
-    } else if (newValue.length < 16) {
+    } else if (newValue.length < 13) {
       setInvestedValue(Math.abs(Number(newValue) || investedValue));
     }
   };

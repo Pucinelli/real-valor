@@ -3,7 +3,7 @@ import { AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, Area } from 'recharts'
 import { InvestmentCurrency, ChartData } from '../../_settings/types/models';
 import { CURRENCIES_LIST } from '../../_settings/consts';
 import { moneyLabelFormatter } from '../../_settings/util';
-import ChartTooltip from '../chart-tooltip';
+import ChartTooltip, { ChartTooltipProps } from '../chart-tooltip';
 
 export interface InvestmentChartProps {
   width?: number;
@@ -68,7 +68,9 @@ const InvestmentChart: React.FC<InvestmentChartProps> = ({
       <XAxis dataKey="_date" interval={interval} />
       <YAxis tickFormatter={moneyLabelFormatter} />
       <CartesianGrid strokeDasharray="8 8" />
-      <Tooltip content={(props: any) => <ChartTooltip data={data} {...props} />} />
+      <Tooltip
+        content={(props: ChartTooltipProps) => <ChartTooltip data={data} {...props} />}
+      />
       {investments.map(it => (
         <Area
           animationDuration={500}

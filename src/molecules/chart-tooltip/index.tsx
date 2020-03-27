@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { makeStyles } from '@material-ui/core';
 import moment from 'moment';
-import { ChartData } from '../../_settings/types/models';
+import { ChartData, ChartTooltipPayload } from '../../_settings/types/models';
 import ChartTooltipItem from '../../atoms/chart-tooltip-item';
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 
 export interface ChartTooltipProps {
   active: boolean;
-  payload: any;
+  payload: ChartTooltipPayload[];
   label: string;
   data: ChartData;
 }
@@ -31,12 +31,11 @@ const ChartTooltip: React.FC<ChartTooltipProps> = ({
   data,
 }) => {
   const classes = useStyles();
-
   return active ? (
     <div className={classes.root}>
       <Typography variant="h6">{moment(label).format('LL')}</Typography>
       <Divider />
-      {(payload || []).map((investment: any) => (
+      {(payload || []).map(investment => (
         <ChartTooltipItem
           key={`chart-tooltip-item-${investment.dataKey}`}
           investment={investment}

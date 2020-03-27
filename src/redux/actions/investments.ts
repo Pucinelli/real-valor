@@ -10,7 +10,7 @@ import {
   handleRawResponse,
   handleResponseDataDecorator,
   handleResponseErrors,
-  handleResponseIntoChartData,
+  handleResponseIntoInvestmentHistory,
   makeRequest,
 } from '../../_settings/util';
 
@@ -40,11 +40,9 @@ export const investmentsFetchRequest = ({
         .then(handleRawResponse)
         .then(handleResponseErrors)
         .then(handleResponseDataDecorator(investment, investmentValue))
-        .then(handleResponseIntoChartData)
+        .then(handleResponseIntoInvestmentHistory)
         .then(dispatchType(dispatch, InvestmentsActionTypes.INVESTMENTS_FETCH_SUCCESS))
-        .catch(
-          dispatchType(dispatch, InvestmentsActionTypes.INVESTMENTS_FETCH_FAILURE)
-        );
+        .catch(dispatchType(dispatch, InvestmentsActionTypes.INVESTMENTS_FETCH_FAILURE));
     }
   };
 };

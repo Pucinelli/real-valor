@@ -39,7 +39,8 @@ const ChartNavigator: React.FC<ChartNavigatorProps> = ({
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = useState<number>(0);
 
-  const handleTabChange = (_: React.ChangeEvent<{}>, tab: any) => setSelectedTab(tab);
+  const handleTabChange = (_: React.ChangeEvent<{}>, tab: number) =>
+    setSelectedTab(tab);
 
   const getChartData = (data: ChartData, tabIndex: number): ChartData => {
     const newData = mapArrayToObject(

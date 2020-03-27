@@ -2,6 +2,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import moment from 'moment';
 import { Store } from '../store';
+import { InvestmentHistory } from '../models';
 
 export enum InvestmentsActionTypes {
   INVESTMENTS_FETCH_REQUEST = 'INVESTMENTS_FETCH_REQUEST',
@@ -21,12 +22,12 @@ export interface InvestmentsFetchRequestAction {
 }
 
 export interface InvestmentsFetchSuccessAction {
-  payload: any;
+  payload: InvestmentHistory;
   type: InvestmentsActionTypes.INVESTMENTS_FETCH_SUCCESS;
 }
 
 export interface InvestmentsFetchFailureAction {
-  payload: any;
+  payload: Error;
   type: InvestmentsActionTypes.INVESTMENTS_FETCH_FAILURE;
 }
 
